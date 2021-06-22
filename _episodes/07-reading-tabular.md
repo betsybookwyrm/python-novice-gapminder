@@ -103,7 +103,7 @@ New Zealand     18363.32494     21050.41377     23189.80135     25185.00911
 ## Use the `DataFrame.info()` method to find out more about a dataframe.
 
 ~~~
-data.info()
+print(data.info())
 ~~~
 {: .language-python}
 ~~~
@@ -181,7 +181,7 @@ gdpPercap_2007  34435.36744  25185.00911
 
 ## Use `DataFrame.describe()` to get summary statistics about data.
 
-`DataFrame.describe()` gets the summary statistics of only the columns that have numerical data. 
+`DataFrame.describe()` gets the summary statistics of only the columns that have numerical data.
 All other columns are ignored, unless you use the argument `include='all'`.
 ~~~
 print(data.describe())
@@ -326,13 +326,13 @@ max      23424.766830    26997.936570    30687.754730    34435.367440
 > >    gdpPercap_2007             18008.5       42951.7  10611.5   11415.8
 > >    ~~~
 > >    {: .output}
-> >    
+> >
 > >    This shows the data that we want, but we may prefer to display three columns instead of three rows,
 > >    so we can flip it back:
 > >    ~~~
-> >    americas_flipped.tail(n=3).T    
+> >    americas_flipped.tail(n=3).T
 > >    ~~~
-> >    {: .language-python}    
+> >    {: .language-python}
 > >    __Note:__ we could have done the above in a single line of code by 'chaining' the commands:
 > >    ~~~
 > >    americas.T.tail(n=3).T
@@ -359,7 +359,7 @@ max      23424.766830    26997.936570    30687.754730    34435.367440
 > {: .output}
 >
 > What value(s) should you pass to `read_csv` to read `microbes.csv` in `analysis.ipynb`?
-> 
+>
 > > ## Solution
 > > We need to specify the path to the file of interest in the call to `pd.read_csv`. We first need to 'jump' out of
 > > the folder `thesis` using '../' and then into the folder `field_data` using 'field_data/'. Then we can specify the filename `microbes.csv.
@@ -372,7 +372,7 @@ max      23424.766830    26997.936570    30687.754730    34435.367440
 {: .challenge}
 
 > ## Writing Data
-> 
+>
 > As well as the `read_csv` function for reading data from a file,
 > Pandas provides a `to_csv` function to write dataframes to files.
 > Applying what you've learned about reading from files,
@@ -389,7 +389,7 @@ max      23424.766830    26997.936570    30687.754730    34435.367440
 > > help(americas.to_csv)
 > > ~~~
 > >{: .language-python}
-> > Note that `help(to_csv)` throws an error! This is a subtlety and is due to the fact that `to_csv` is NOT a function in 
-> > and of itself and the actual call is `americas.to_csv`. 
+> > Note that `help(to_csv)` throws an error! This is a subtlety and is due to the fact that `to_csv` is NOT a function in
+> > and of itself and the actual call is `americas.to_csv`.
 > {: .solution}
 {: .challenge}
