@@ -132,7 +132,7 @@ Poland          5338.752143     6557.152776     8006.506993
 
 In the above code, we discover that **slicing using `loc` is inclusive at both
 ends**, which differs from **slicing using `iloc`**, where slicing indicates
-everything up to but not including the final index. 
+everything up to but not including the final index.
 
 
 ## Result of slicing can be used in further operations.
@@ -243,10 +243,10 @@ max      13450.401510    16361.876470    18965.055510
 
 ## Group By: split-apply-combine
 
-Pandas vectorizing methods and grouping operations are features that provide users 
+Pandas vectorizing methods and grouping operations are features that provide users
 much flexibility to analyse their data.
 
-For instance, let's say we want to have a clearer view on how the European countries 
+For instance, let's say we want to have a clearer view on how the European countries
 split themselves according to their GDP.
 
 1.  We may have a glance by splitting the countries in two groups during the years surveyed,
@@ -257,7 +257,7 @@ split themselves according to their GDP.
 ~~~
 mask_higher = data > data.mean()
 wealth_score = mask_higher.aggregate('sum', axis=1) / len(data.columns)
-wealth_score
+print(wealth_score)
 ~~~
 {: .language-python}
 ~~~
@@ -300,30 +300,31 @@ Finally, for each group in the `wealth_score` table, we sum their (financial) co
 across the years surveyed using chained methods:
 
 ~~~
-data.groupby(wealth_score).sum()
+print(data.groupby(wealth_score).sum())
 ~~~
 {: .language-python}
 ~~~
           gdpPercap_1952  gdpPercap_1957  gdpPercap_1962  gdpPercap_1967  \
-0.000000    36916.854200    46110.918793    56850.065437    71324.848786   
-0.333333    16790.046878    20942.456800    25744.935321    33567.667670   
-0.500000    11807.544405    14505.000150    18380.449470    21421.846200   
-1.000000   104317.277560   127332.008735   149989.154201   178000.350040   
+0.000000    36916.854200    46110.918793    56850.065437    71324.848786
+0.333333    16790.046878    20942.456800    25744.935321    33567.667670
+0.500000    11807.544405    14505.000150    18380.449470    21421.846200
+1.000000   104317.277560   127332.008735   149989.154201   178000.350040
 
           gdpPercap_1972  gdpPercap_1977  gdpPercap_1982  gdpPercap_1987  \
-0.000000    88569.346898   104459.358438   113553.768507   119649.599409   
-0.333333    45277.839976    53860.456750    59679.634020    64436.912960   
-0.500000    25377.727380    29056.145370    31914.712050    35517.678220   
-1.000000   215162.343140   241143.412730   263388.781960   296825.131210   
+0.000000    88569.346898   104459.358438   113553.768507   119649.599409
+0.333333    45277.839976    53860.456750    59679.634020    64436.912960
+0.500000    25377.727380    29056.145370    31914.712050    35517.678220
+1.000000   215162.343140   241143.412730   263388.781960   296825.131210
 
-          gdpPercap_1992  gdpPercap_1997  gdpPercap_2002  gdpPercap_2007  
-0.000000    92380.047256   103772.937598   118590.929863   149577.357928  
-0.333333    67918.093220    80876.051580   102086.795210   122803.729520  
-0.500000    36310.666080    40723.538700    45564.308390    51403.028210  
+          gdpPercap_1992  gdpPercap_1997  gdpPercap_2002  gdpPercap_2007
+0.000000    92380.047256   103772.937598   118590.929863   149577.357928
+0.333333    67918.093220    80876.051580   102086.795210   122803.729520
+0.500000    36310.666080    40723.538700    45564.308390    51403.028210
 1.000000   315238.235970   346930.926170   385109.939210   427850.333420
 ~~~
 {: .output}
 
+Note that Jupyter may display the results as a formatted table if the `print()` statement is omitted.
 
 > ## Selection of Individual Values
 >
@@ -357,18 +358,18 @@ data.groupby(wealth_score).sum()
 > 1.  Do the two statements below produce the same output?
 > 2.  Based on this,
 >     what rule governs what is included (or not) in numerical slices and named slices in Pandas?
-> 
+>
 > ~~~
 > print(df.iloc[0:2, 0:2])
 > print(df.loc['Albania':'Belgium', 'gdpPercap_1952':'gdpPercap_1962'])
 > ~~~
 > {: .language-python}
-> 
+>
 > > ## Solution
 > > No, they do not produce the same output! The output of the first statement is:
 > > ~~~
 > >         gdpPercap_1952  gdpPercap_1957
-> > country                                
+> > country
 > > Albania     1601.056136     1942.284244
 > > Austria     6137.076492     8842.598030
 > > ~~~
@@ -376,13 +377,13 @@ data.groupby(wealth_score).sum()
 > > The second statement gives:
 > > ~~~
 > >         gdpPercap_1952  gdpPercap_1957  gdpPercap_1962
-> > country                                                
+> > country
 > > Albania     1601.056136     1942.284244     2312.888958
 > > Austria     6137.076492     8842.598030    10750.721110
 > > Belgium     8343.105127     9714.960623    10991.206760
 > > ~~~
 > >{: .output}
-> > Clearly, the second statement produces an additional column and an additional row compared to the first statement.  
+> > Clearly, the second statement produces an additional column and an additional row compared to the first statement.
 > > What conclusion can we draw? We see that a numerical slice, 0:2, *omits* the final index (i.e. index 2)
 > > in the range provided,
 > > while a named slice, 'gdpPercap_1952':'gdpPercap_1962', *includes* the final element.
@@ -409,37 +410,37 @@ data.groupby(wealth_score).sum()
 > > first = pd.read_csv('data/gapminder_all.csv', index_col='country')
 > > ~~~
 > > {: .language-python}
-> > This line loads the dataset containing the GDP data from all countries into a dataframe called 
-> > `first`. The `index_col='country'` parameter selects which column to use as the 
-> > row labels in the dataframe.  
+> > This line loads the dataset containing the GDP data from all countries into a dataframe called
+> > `first`. The `index_col='country'` parameter selects which column to use as the
+> > row labels in the dataframe.
 > > ~~~
 > > second = first[first['continent'] == 'Americas']
 > > ~~~
 > > {: .language-python}
-> > This line makes a selection: only those rows of `first` for which the 'continent' column matches 
-> > 'Americas' are extracted. Notice how the Boolean expression inside the brackets, 
-> > `first['continent'] == 'Americas'`, is used to select only those rows where the expression is true. 
-> > Try printing this expression! Can you print also its individual True/False elements? 
+> > This line makes a selection: only those rows of `first` for which the 'continent' column matches
+> > 'Americas' are extracted. Notice how the Boolean expression inside the brackets,
+> > `first['continent'] == 'Americas'`, is used to select only those rows where the expression is true.
+> > Try printing this expression! Can you print also its individual True/False elements?
 > > (hint: first assign the expression to a variable)
 > > ~~~
 > > third = second.drop('Puerto Rico')
 > > ~~~
 > > {: .language-python}
-> > As the syntax suggests, this line drops the row from `second` where the label is 'Puerto Rico'. The 
+> > As the syntax suggests, this line drops the row from `second` where the label is 'Puerto Rico'. The
 > > resulting dataframe `third` has one row less than the original dataframe `second`.
 > > ~~~
 > > fourth = third.drop('continent', axis = 1)
 > > ~~~
 > > {: .language-python}
-> > Again we apply the drop function, but in this case we are dropping not a row but a whole column. 
-> > To accomplish this, we need to specify also the `axis` parameter (we want to drop the second column 
+> > Again we apply the drop function, but in this case we are dropping not a row but a whole column.
+> > To accomplish this, we need to specify also the `axis` parameter (we want to drop the second column
 > > which has index 1).
 > > ~~~
 > > fourth.to_csv('result.csv')
 > > ~~~
 > > {: .language-python}
-> > The final step is to write the data that we have been working on to a csv file. Pandas makes this easy 
-> > with the `to_csv()` function. The only required argument to the function is the filename. Note that the 
+> > The final step is to write the data that we have been working on to a csv file. Pandas makes this easy
+> > with the `to_csv()` function. The only required argument to the function is the filename. Note that the
 > > file will be written in the directory from which you started the Jupyter or Python session.
 > {: .solution}
 {: .challenge}
@@ -472,7 +473,7 @@ data.groupby(wealth_score).sum()
 > 1.  GDP per capita for all countries in 1982.
 > 2.  GDP per capita for Denmark for all years.
 > 3.  GDP per capita for all countries for years *after* 1985.
-> 4.  GDP per capita for each country in 2007 as a multiple of 
+> 4.  GDP per capita for each country in 2007 as a multiple of
 >     GDP per capita for that country in 1952.
 >
 > > ## Solution
@@ -509,7 +510,7 @@ data.groupby(wealth_score).sum()
 > Python includes a `dir()` function that can be used to display all of the available methods (functions) that are built into a data object.  In Episode 4, we used some methods with a string. But we can see many more are available by using `dir()`:
 >
 > ~~~
-> my_string = 'Hello world!'   # creation of a string object 
+> my_string = 'Hello world!'   # creation of a string object
 > dir(myString)
 > ~~~
 > {: .language-python}
@@ -531,7 +532,7 @@ data.groupby(wealth_score).sum()
 >
 > You can use `help()` or <kbd>Shift</kbd>+<kbd>Tab</kbd> to get more information about what these methods do.
 >
-> Assume Pandas has been imported and the Gapminder GDP data for Europe has been loaded as `data`.  Then, use `dir()` 
+> Assume Pandas has been imported and the Gapminder GDP data for Europe has been loaded as `data`.  Then, use `dir()`
 > to find the function that prints out the median per-capita GDP across all European countries for each year that information is available.
 >
 > > ## Solution
